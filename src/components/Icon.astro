@@ -1,0 +1,112 @@
+---
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { siteConfig } from "../data/site";
+
+/**
+ * The only way an icon reaches a page.
+ *
+ * Habit #12 in the AI design bias catalogue is symbols dropped inline: an emoji, a
+ * dingbat, or a bare arrow trailing a "Read more" link. They come from a fallback font, so
+ * their weight, size and baseline never match the words around them, and emoji look
+ * different on every operating system. The defect looks like this:
+ * icons-allow: naming the defect means showing it once
+ *     Read more →
+ * This component replaces all of that with one real icon set, sized in `em` and coloured
+ * with `currentColor`, so an icon inherits the type it sits in instead of fighting it.
+ * `agent/contracts/icons.md` is the rule; this is the mechanism.
+ *
+ * How: the vendored SVG is read from disk at build time, its wrapper is discarded, and its
+ * inner shapes are re-emitted inside our own `<svg>`. Reading from disk rather than
+ * importing keeps all 2,394 vendored files out of the module graph — only the icons a page
+ * actually uses are ever touched. `astro.config.mjs` sets `output: "static"`, so the build
+ * runs in Node and `node:fs` is available.
+ *
+ * O(1) time per distinct icon after the first use, which is cached in `cache`; the first
+ * use costs one file read. O(k) space for k distinct icons on the site, holding a few
+ * hundred bytes of path data each.
+ */
+
+const WEIGHTS = ["thin", "light", "regular", "bold", "fill", "duotone"] as const;
+
+type Weight = (typeof WEIGHTS)[number];
+
+interface Props {
+  /** Icon name as it appears in `src/icons/selection.json`, e.g. "arrow-right". */
+  name: string;
+  /** Overrides the site-wide weight. Use sparingly: one weight per site is the rule. */
+  weight?: Weight;
+  /** Any CSS length. Defaults to 1em so the icon tracks the surrounding type. */
+  size?: string;
+  /** Set when the icon carries meaning. Left unset, the icon is hidden from assistive tech. */
+  label?: string;
+  class?: string;
+}
+
+const { name, weight = siteConfig.iconWeight, size = "1em", label, class: className } = Astro.props;
+
+/** Cache of already-read icon markup, keyed by "weight/name". Survives across pages in one build. */
+const cache: Map<string, string> = ((globalThis as Record<string, unknown>).__indexdockIconCache ??=
+  new Map()) as Map<string, string>;
+
+const iconRoot = resolve(process.cwd(), "src/icons");
+
+/**
+ * Reads one icon's inner SVG markup, from the Phosphor set or from our own brand marks.
+ *
+ * Brand marks are stored as `brand/<name>-<weight>.svg` because Phosphor has no mark for
+ * them; Viber is the only one today. A miss on either path throws rather than rendering
+ * nothing, so a typo fails the build instead of silently deleting an icon from the page.
+ *
+ * O(1) time and space per call beyond the file itself.
+ */
+function readIcon(iconName: string, iconWeight: Weight): string {
+  const key = `${iconWeight}/${iconName}`;
+  const cached = cache.get(key);
+  if (cached !== undefined) return cached;
+
+  const candidates = [
+    resolve(iconRoot, "phosphor", iconWeight, `${iconName}.svg`),
+    resolve(iconRoot, "brand", `${iconName}-${iconWeight}.svg`),
+  ];
+
+  for (const candidate of candidates) {
+    let file: string;
+    try {
+      file = readFileSync(candidate, "utf8");
+    } catch {
+      continue;
+    }
+    const inner = file.replace(/^[\s\S]*?<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "").trim();
+    cache.set(key, inner);
+    return inner;
+  }
+
+  throw new Error(
+    `<Icon name="${iconName}" weight="${iconWeight}" /> is not vendored. `
+      + `Looked in ${candidates.map((path) => path.replace(iconRoot, "src/icons")).join(" and ")}. `
+      + "Add the name to src/icons/selection.json and run `npm run sync:icons`, "
+      + "or pick a name that is already there. See agent/contracts/icons.md.",
+  );
+}
+
+if (!WEIGHTS.includes(weight)) {
+  throw new Error(`<Icon name="${name}" /> asked for weight "${weight}"; expected one of ${WEIGHTS.join(", ")}.`);
+}
+
+const markup = readIcon(name, weight);
+const classes = ["icon", className].filter(Boolean).join(" ");
+---
+
+<svg
+  class={classes}
+  viewBox="0 0 256 256"
+  width={size}
+  height={size}
+  fill="currentColor"
+  role={label ? "img" : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : "true"}
+  focusable="false"
+  set:html={markup}
+/>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" width="1200" height="440" role="img" aria-label="Who does what: you bring the truth about your business, your logo and photographs, websites whose design you like, and four approvals. The agent writes and tests the code, designs and builds every page, fixes what the checks find, and publishes the site.">
+  <title>Who does what</title>
+  <defs>
+    <linearGradient id="panel2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071735"/>
+      <stop offset="1" stop-color="#040b18"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    /* Position only, never opacity, and fill-mode backwards. See docs/media/hero.svg for
+       why: an unanimated or frozen render still has to be the whole picture. */
+    .rise  { animation: rise 640ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+    .sweep { animation: sweep 900ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+    .a1 { animation-delay: 80ms; }
+    .a2 { animation-delay: 180ms; }
+    .a3 { animation-delay: 280ms; }
+    .a4 { animation-delay: 380ms; }
+    .b1 { animation-delay: 240ms; }
+    .b2 { animation-delay: 340ms; }
+    .b3 { animation-delay: 440ms; }
+    .b4 { animation-delay: 540ms; }
+    .b5 { animation-delay: 640ms; }
+    .mid { animation-delay: 760ms; }
+    .cap { animation-delay: 1000ms; }
+
+    @keyframes rise {
+      from { transform: translateY(14px); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes sweep {
+      from { transform: translateX(-22px); }
+      to   { transform: translateX(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rise, .sweep { animation: none; }
+    }
+  </style>
+
+  <rect x="0" y="0" width="1200" height="440" rx="28" fill="url(#panel2)"/>
+  <rect x="0.5" y="0.5" width="1199" height="439" rx="28" fill="none" stroke="#9db5e6" stroke-opacity="0.18"/>
+
+  <g font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+
+    <g class="rise">
+      <rect x="48" y="48" width="504" height="296" rx="20" fill="#112a55" fill-opacity="0.5" stroke="#65e6bb" stroke-opacity="0.32"/>
+      <text x="84" y="106" fill="#65e6bb" font-size="16" font-weight="700" letter-spacing="2.4">YOU BRING</text>
+    </g>
+    <g class="rise a1"><circle cx="90" cy="158" r="6" fill="#65e6bb"/><text x="112" y="165" fill="#f7f9ff" font-size="22" font-weight="500">The truth about your business</text></g>
+    <g class="rise a2"><circle cx="90" cy="206" r="6" fill="#65e6bb"/><text x="112" y="213" fill="#f7f9ff" font-size="22" font-weight="500">Your logo and photographs</text></g>
+    <g class="rise a3"><circle cx="90" cy="254" r="6" fill="#65e6bb"/><text x="112" y="261" fill="#f7f9ff" font-size="22" font-weight="500">Websites whose design you like</text></g>
+    <g class="rise a4"><circle cx="90" cy="302" r="6" fill="#65e6bb"/><text x="112" y="309" fill="#f7f9ff" font-size="22" font-weight="500">Four approvals, at your own pace</text></g>
+
+    <g class="sweep mid" fill="none" stroke="#a8b4cb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M576 182 l16 14 -16 14"/>
+      <path d="M600 182 l16 14 -16 14"/>
+    </g>
+
+    <g class="rise b1">
+      <rect x="648" y="48" width="504" height="296" rx="20" fill="#112a55" fill-opacity="0.5" stroke="#8fb3ff" stroke-opacity="0.32"/>
+      <text x="684" y="106" fill="#8fb3ff" font-size="16" font-weight="700" letter-spacing="2.4">THE AGENT DOES</text>
+    </g>
+    <g class="rise b2"><circle cx="690" cy="158" r="6" fill="#8fb3ff"/><text x="712" y="165" fill="#f7f9ff" font-size="22" font-weight="500">Writes and tests all the code</text></g>
+    <g class="rise b3"><circle cx="690" cy="206" r="6" fill="#8fb3ff"/><text x="712" y="213" fill="#f7f9ff" font-size="22" font-weight="500">Designs and builds every page</text></g>
+    <g class="rise b4"><circle cx="690" cy="254" r="6" fill="#8fb3ff"/><text x="712" y="261" fill="#f7f9ff" font-size="22" font-weight="500">Fixes whatever the checks find</text></g>
+    <g class="rise b5"><circle cx="690" cy="302" r="6" fill="#8fb3ff"/><text x="712" y="309" fill="#f7f9ff" font-size="22" font-weight="500">Publishes it and keeps it live</text></g>
+
+    <text class="rise cap" x="600" y="398" fill="#a8b4cb" font-size="21" font-weight="400" text-anchor="middle">It never asks you to write code. It also never invents a fact about your business.</text>
+  </g>
+</svg>

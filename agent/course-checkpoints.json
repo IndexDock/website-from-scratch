@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoints": [
+    { "id": "setup-accounts", "title": "Set up accounts", "url": null },
+    { "id": "create-repository", "title": "Create your repository", "url": null },
+    { "id": "deploy-placeholder", "title": "Connect Cloudflare and deploy the starter", "url": null },
+    { "id": "star-repository", "title": "Star the repository", "url": null, "optional": true },
+    { "id": "start-agent", "title": "Start the coding agent", "url": null },
+    { "id": "review-brief", "title": "Review the website plan", "url": null },
+    { "id": "share-references", "title": "Share websites you like", "url": null },
+    { "id": "choose-design", "title": "Choose the design", "url": null },
+    { "id": "upload-assets", "title": "Upload your logo and photographs", "url": null, "optional": true },
+    { "id": "review-website", "title": "Review the website", "url": null },
+    { "id": "connect-domain", "title": "Connect the domain", "url": null },
+    { "id": "secure-repository", "title": "Make your repository private", "url": null },
+    { "id": "course-complete", "title": "Complete the course", "url": null }
+  ]
+}

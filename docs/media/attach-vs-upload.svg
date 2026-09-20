@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 470" width="1200" height="470" role="img" aria-label="Attaching a photo to the chat lets the agent see it, but no file arrives in your repository. Opening the upload link the agent gives you puts the real file in your repository and onto your website.">
+  <title>Attaching an image compared with uploading it</title>
+  <defs>
+    <linearGradient id="panel3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071735"/>
+      <stop offset="1" stop-color="#040b18"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    /* Position only, never opacity, and fill-mode backwards. See docs/media/hero.svg for
+       why: an unanimated or frozen render still has to be the whole picture. */
+    .rise { animation: rise 640ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+    .draw { animation: draw 700ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+    .n1 { animation-delay: 100ms; }
+    .n2 { animation-delay: 320ms; }
+    .n3 { animation-delay: 520ms; }
+    .n4 { animation-delay: 700ms; }
+    .n5 { animation-delay: 260ms; }
+    .n6 { animation-delay: 480ms; }
+    .n7 { animation-delay: 680ms; }
+    .n8 { animation-delay: 860ms; }
+    .n9 { animation-delay: 1040ms; }
+    .n10 { animation-delay: 1240ms; }
+
+    @keyframes rise {
+      from { transform: translateY(14px); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes draw {
+      from { transform: translateY(-10px); }
+      to   { transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rise, .draw { animation: none; }
+    }
+  </style>
+
+  <rect x="0" y="0" width="1200" height="470" rx="28" fill="url(#panel3)"/>
+  <rect x="0.5" y="0.5" width="1199" height="469" rx="28" fill="none" stroke="#9db5e6" stroke-opacity="0.18"/>
+
+  <g font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+
+    <g class="rise">
+      <rect x="40" y="40" width="544" height="330" rx="20" fill="#0b1c3d" fill-opacity="0.55" stroke="#9db5e6" stroke-opacity="0.22"/>
+      <text x="72" y="84" fill="#a8b4cb" font-size="15" font-weight="700" letter-spacing="2.4">WHAT DOES NOT WORK</text>
+    </g>
+
+    <g class="rise n1">
+      <rect x="72" y="106" width="480" height="80" rx="14" fill="#112a55" fill-opacity="0.55" stroke="#9db5e6" stroke-opacity="0.2"/>
+      <g transform="translate(100 132)" fill="none" stroke="#a8b4cb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="0" y="0" width="28" height="24" rx="4"/>
+        <circle cx="8" cy="8" r="2.6"/>
+        <path d="M2 21 L10 12 L16 18 L21 14 L26 20"/>
+      </g>
+      <text x="152" y="153" fill="#f7f9ff" font-size="21" font-weight="500">You attach a photo in the chat</text>
+    </g>
+
+    <g class="draw n2">
+      <path d="M312 186 V 232" stroke="#a8b4cb" stroke-opacity="0.5" stroke-width="2" stroke-dasharray="6 7"/>
+      <circle cx="312" cy="209" r="14" fill="#0b1c3d" stroke="#a8b4cb" stroke-opacity="0.65" stroke-width="2"/>
+      <path d="M306 203 L318 215 M318 203 L306 215" stroke="#a8b4cb" stroke-width="2.4" stroke-linecap="round"/>
+    </g>
+
+    <g class="rise n3">
+      <rect x="72" y="232" width="480" height="80" rx="14" fill="#112a55" fill-opacity="0.3" stroke="#9db5e6" stroke-opacity="0.14" stroke-dasharray="7 6"/>
+      <text x="100" y="279" fill="#a8b4cb" font-size="21" font-weight="500">The agent sees it. Nothing arrives.</text>
+    </g>
+
+    <text class="rise n4" x="72" y="346" fill="#a8b4cb" font-size="18" font-weight="400">An attachment has no file behind it.</text>
+
+    <g class="rise n5">
+      <rect x="616" y="40" width="544" height="330" rx="20" fill="#0b1c3d" fill-opacity="0.55" stroke="#65e6bb" stroke-opacity="0.3"/>
+      <text x="648" y="84" fill="#65e6bb" font-size="15" font-weight="700" letter-spacing="2.4">WHAT DELIVERS</text>
+    </g>
+
+    <g class="rise n6">
+      <rect x="648" y="106" width="480" height="80" rx="14" fill="#112a55" fill-opacity="0.6" stroke="#65e6bb" stroke-opacity="0.24"/>
+      <g transform="translate(676 132)" fill="none" stroke="#65e6bb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 20 V 3"/>
+        <path d="M7 10 L14 3 L21 10"/>
+        <path d="M2 24 H 26"/>
+      </g>
+      <text x="728" y="153" fill="#f7f9ff" font-size="21" font-weight="500">You open the agent's upload link</text>
+    </g>
+
+    <g class="draw n7">
+      <path d="M888 186 V 232" stroke="#65e6bb" stroke-opacity="0.7" stroke-width="2.4"/>
+      <path d="M880 222 L888 232 L896 222" fill="none" stroke="#65e6bb" stroke-opacity="0.7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <g class="rise n8">
+      <rect x="648" y="232" width="480" height="80" rx="14" fill="#112a55" fill-opacity="0.6" stroke="#65e6bb" stroke-opacity="0.24"/>
+      <g transform="translate(676 260)" fill="none" stroke="#65e6bb" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 12 L10 20 L26 3"/>
+      </g>
+      <text x="728" y="279" fill="#f7f9ff" font-size="21" font-weight="500">The file lands in your repository</text>
+    </g>
+
+    <text class="rise n9" x="648" y="346" fill="#a8b4cb" font-size="18" font-weight="400">Tell the agent, and it appears on your site.</text>
+
+    <text class="rise n10" x="600" y="428" fill="#c2d5ff" font-size="22" font-weight="600" text-anchor="middle">Attaching lets the agent look at an image. Uploading is what delivers it.</text>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+---
+import { siteConfig } from "../data/site";
+
+interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  label?: string;
+}
+
+const { items, label = "Breadcrumb" } = Astro.props;
+const metadataBase = siteConfig.siteUrl ? new URL(siteConfig.siteUrl) : undefined;
+const schema = metadataBase ? {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.label,
+    item: new URL(item.href, metadataBase).href,
+  })),
+} : undefined;
+const encodedSchema = schema ? JSON.stringify(schema).replaceAll("<", "\\u003c") : undefined;
+---
+
+<nav class="breadcrumbs" aria-label={label}>
+  <ol>
+    {items.map((item, index) => (
+      <li>
+        {index < items.length - 1 ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+{encodedSchema && <script is:inline type="application/ld+json" set:html={encodedSchema} />}
+
+<style>
+  ol { display: flex; flex-wrap: wrap; gap: 0.45rem; padding: 0; margin: 0; list-style: none; }
+  li + li::before { margin-right: 0.45rem; content: "/"; opacity: 0.55; }
+  a { text-underline-offset: 0.2em; }
+</style>

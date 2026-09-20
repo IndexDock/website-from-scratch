@@ -1,0 +1,17 @@
+---
+import Icon from "./Icon.astro";
+import { siteConfig } from "../data/site";
+---
+
+<header class="site-header">
+  <div class="site-header__inner page-shell">
+    <a class="brand" href="/" aria-label="IndexDock Starter home">
+      <img src="/indexdock-mark.svg" width="21" height="30" alt="" />
+      <span>IndexDock <strong>Starter</strong></span>
+    </a>
+    <a class="text-link" href={siteConfig.repositoryUrl}>
+      <Icon name="github-logo" />
+      View repository <Icon name="arrow-up-right" />
+    </a>
+  </div>
+</header>

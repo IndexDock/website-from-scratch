@@ -1,0 +1,157 @@
+{
+  "$comment": "Source of truth for the vendored icon set. Edit here, then run `npm run sync:icons`.",
+  "source": "@phosphor-icons/core",
+  "version": "2.1.1",
+  "license": "MIT",
+  "retrieved": "2026-08-21",
+  "weights": [
+    "thin",
+    "light",
+    "regular",
+    "bold",
+    "fill",
+    "duotone"
+  ],
+  "arrowShapes": {
+    "straight": "Straight shaft, open head, 90/45 degrees only. Geometric and neutral grotesque sans.",
+    "bend-round": "Turns through a rounded corner. Rounded and humanist faces.",
+    "caret": "Head only, no shaft. The quiet option where a full arrow would shout."
+  },
+  "groups": {
+    "arrows": {
+      "straight": [
+        "arrow-down",
+        "arrow-down-left",
+        "arrow-down-right",
+        "arrow-left",
+        "arrow-right",
+        "arrow-up",
+        "arrow-up-left",
+        "arrow-up-right"
+      ],
+      "bend-round": [
+        "arrow-bend-double-up-left",
+        "arrow-bend-double-up-right",
+        "arrow-bend-down-left",
+        "arrow-bend-down-right",
+        "arrow-bend-left-down",
+        "arrow-bend-left-up",
+        "arrow-bend-right-down",
+        "arrow-bend-right-up",
+        "arrow-bend-up-left",
+        "arrow-bend-up-right"
+      ],
+      "caret": [
+        "caret-double-down",
+        "caret-double-left",
+        "caret-double-right",
+        "caret-double-up",
+        "caret-down",
+        "caret-left",
+        "caret-line-down",
+        "caret-line-left",
+        "caret-line-right",
+        "caret-line-up",
+        "caret-right",
+        "caret-up",
+        "caret-up-down"
+      ]
+    },
+    "contact-social": [
+      "address-book",
+      "at",
+      "envelope",
+      "facebook-logo",
+      "github-logo",
+      "instagram-logo",
+      "map-pin",
+      "navigation-arrow",
+      "phone",
+      "telegram-logo",
+      "tiktok-logo",
+      "whatsapp-logo",
+      "x-logo",
+      "youtube-logo"
+    ],
+    "trust-status": [
+      "check",
+      "check-circle",
+      "check-fat",
+      "heart",
+      "shield-check",
+      "star",
+      "star-half",
+      "thumbs-up",
+      "warning",
+      "x"
+    ],
+    "time-place": [
+      "calendar",
+      "calendar-check",
+      "clock",
+      "globe",
+      "gps-fix",
+      "house",
+      "storefront",
+      "wheelchair"
+    ],
+    "commerce-money": [
+      "credit-card",
+      "currency-dollar",
+      "currency-eur",
+      "invoice",
+      "money",
+      "percent",
+      "receipt",
+      "ticket",
+      "wallet"
+    ],
+    "transport": [
+      "bicycle",
+      "car",
+      "motorcycle",
+      "truck",
+      "van"
+    ],
+    "trades-tools": [
+      "broom",
+      "chef-hat",
+      "gear",
+      "hammer",
+      "hard-hat",
+      "key",
+      "lock",
+      "paint-brush",
+      "scissors",
+      "screwdriver",
+      "toolbox",
+      "wrench"
+    ],
+    "professions": [
+      "briefcase",
+      "calculator",
+      "camera",
+      "eyeglasses",
+      "first-aid-kit",
+      "graduation-cap",
+      "stethoscope",
+      "tooth"
+    ],
+    "ui-system": [
+      "download-simple",
+      "eye",
+      "file-pdf",
+      "list-checks",
+      "magnifying-glass",
+      "play",
+      "quotes",
+      "users"
+    ]
+  },
+  "brand": {
+    "viber": [
+      "regular",
+      "fill"
+    ]
+  }
+}

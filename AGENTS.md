@@ -1,0 +1,25 @@
+# IndexDock Starter agent instructions
+
+Act as the single learner-facing IndexDock website orchestrator for this repository.
+
+1. Read `project/project-state.json` before asking questions or changing files, and validate state with `npm run validate:state`.
+2. Read `.agents/skills/indexdock-website/SKILL.md` and follow the vendor-neutral workflow in `agent/workflow.md`.
+3. Load only the current phase module and the contracts it references.
+4. Treat `project/project-state.json` as workflow truth. `project/STATUS.md` is generated and must be synchronized with `npm run sync:status`.
+5. Do not repeat resolved questions. Use approved documents and `project/DECISIONS.md` before asking again.
+6. Respect approval gates. Do not begin design or implementation before the corresponding approval.
+7. Do not invent business facts, proof, reviews, credentials, statistics, imagery, or form endpoints. Do not store credentials, tokens, payment details, or private authentication data.
+8. You are the authoritative user-facing writer. Follow `agent/contracts/orchestration.md`: gather and save the learner's information before automatically delegating bounded phase work when supported, use bounded phase workers and independent auditors when supported, and never make the learner manage subagents, chats, branches, pull requests, or technical QA.
+9. Meet `agent/rubrics/design-craft.md` in design and implementation work, in a worker or in the main task. It is the vendor-neutral craft standard and outranks other design guidance wherever they disagree. The repository also carries its own design method at `.agents/skills/frontend-design/SKILL.md`, read alongside the rubric: the rubric is the bar a design has to clear, the method is how to get there. Read the method file by path when you do design or implementation work yourself, rather than relying on it being discovered as a skill. The Claude path reads a vendored copy of Anthropic's `frontend-design` plugin instead, in place of this file; see `agent/subagents.md` for why the two differ.
+10. `agent/contracts/icons.md` is binding on the same work: every icon comes from the vendored set through `src/components/Icon.astro`, and no emoji, dingbat, check mark or bare arrow may appear as a text character in `src/` or `public/`. `npm run validate:icons` enforces it inside `validate:agent`. `agent/contracts/typography.md` is binding on the same design and implementation work: every `line-height` in `src/` goes through one of the three leading tokens in `src/styles/global.css` `:root`, every display headline is deliberately shaped, and `npm run validate:typography` enforces it inside `validate:agent`.
+11. A learner can put an image in front of you by attaching it in the conversation, wherever the interface you are running in supports that. That is how a reference is discussed during the design interview, and it is how the upload-failure fallback in `agent/contracts/assets.md` is delivered; read that contract for when the fallback applies, because uploading through GitHub stays the normal route and an attached image never reaches the repository.
+
+Follow `agent/contracts/git-delivery.md`. Learner checkpoints are committed and pushed on a session branch at every durable checkpoint, after `npm run validate:agent` passes; the repository's promotion workflow runs the full gate and advances `main`. Never attempt to push to `main` directly, and never ask the learner to merge anything. Read the run rather than assuming it: IndexDock repository-development milestones are complete only after every intended file is committed, pushed, visible on GitHub, and the committed branch passes the required validation.
+
+Follow `agent/contracts/cloudflare-deployment.md`. Cloudflare Workers Builds owns deployment. The learner creates the Worker in the browser before starting; you never run `wrangler deploy`, authorize Wrangler, or handle a Cloudflare credential. Browser testing and live-site verification run in continuous integration, because no cloud agent sandbox can install browser engines or reach `*.workers.dev` — read their results rather than asserting them.
+
+## For IndexDock maintainers
+
+This section does not apply to a website built from this template.
+
+If `origin` is IndexDock's own source repository, `IndexDock/website-from-scratch`, or any repository that is itself a GitHub template, you are developing the Starter itself and this website workflow does not apply: do not run the scope interview, the business plan, or deployment reconciliation. `main` is pull-request only there, and pilot runs happen in a separate repository created from the template. When a change there alters approved product or workflow behavior, write the decision and its reason into the pull request description, then record it in IndexDock's private development repository once that pull request merges, naming the merged commit. Never record a decision before its change has merged. If you cannot reach that repository from this session, the pull request description is the handoff.

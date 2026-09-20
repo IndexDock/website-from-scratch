@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://school.indexdock.com/schemas/project-state.schema.json",
+  "title": "IndexDock Starter project state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "project",
+    "workflow",
+    "approvals",
+    "design",
+    "implementation",
+    "deployment",
+    "lastCheckpoint",
+    "blockers",
+    "conflicts"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": "3.2.0" },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "repository", "language"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "repository": { "type": ["string", "null"], "pattern": "^[^/\\s]+/[^/\\s]+$" },
+        "language": { "type": ["string", "null"] }
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phase", "status", "nextAction", "courseCheckpointId"],
+      "properties": {
+        "phase": {
+          "enum": ["bootstrap", "scope", "business-plan", "design-discovery", "design-review", "implementation", "quality-review", "publication", "maintenance"]
+        },
+        "status": { "enum": ["ready", "in-progress", "awaiting-approval", "blocked", "complete"] },
+        "nextAction": { "type": "string", "minLength": 1 },
+        "courseCheckpointId": {
+          "enum": ["setup-accounts", "create-repository", "deploy-placeholder", "star-repository", "start-agent", "review-brief", "share-references", "choose-design", "upload-assets", "review-website", "connect-domain", "secure-repository", "course-complete"]
+        }
+      }
+    },
+    "approvals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "websitePlan", "design", "finalWebsite"],
+      "properties": {
+        "scope": { "type": ["boolean", "null"] },
+        "websitePlan": { "type": ["boolean", "null"] },
+        "design": { "type": ["boolean", "null"] },
+        "finalWebsite": { "type": ["boolean", "null"] }
+      }
+    },
+    "design": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "conceptCount", "selectedConcept"],
+      "properties": {
+        "status": { "enum": ["not-started", "discovery", "concepts-ready", "approved"] },
+        "conceptCount": { "type": ["integer", "null"], "minimum": 1, "maximum": 3 },
+        "selectedConcept": { "type": ["string", "null"] }
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "siteMode", "noindex"],
+      "properties": {
+        "status": { "enum": ["starter-ready", "not-started", "in-progress", "qa-ready", "approved", "published"] },
+        "siteMode": { "enum": ["starter", "design-review", "business"] },
+        "noindex": { "type": "boolean" }
+      }
+    },
+    "deployment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "deploymentMethod", "workerName", "workersDevUrl", "productionUrl", "customDomainDecision", "customDomain", "deployedCommit", "verifiedAt", "fallbackReason"],
+      "properties": {
+        "provider": { "const": "cloudflare-workers" },
+        "deploymentMethod": { "enum": ["not-selected", "workers-builds"] },
+        "repositoryVisibility": { "enum": [null, "public", "private"], "default": null },
+        "promotionMode": { "enum": [null, "ci-auto", "manual-merge"], "default": "ci-auto" },
+        "workerName": { "type": ["string", "null"], "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$" },
+        "workersDevUrl": { "type": ["string", "null"], "format": "uri" },
+        "productionUrl": { "type": ["string", "null"], "format": "uri" },
+        "customDomainDecision": { "enum": [null, "now", "later"] },
+        "customDomain": { "type": ["string", "null"] },
+        "deployedCommit": { "type": ["string", "null"], "pattern": "^[0-9a-f]{7,40}$" },
+        "verifiedAt": { "type": ["string", "null"], "format": "date-time" },
+        "fallbackReason": { "type": ["string", "null"] }
+      }
+    },
+    "lastCheckpoint": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "completedAt"],
+          "properties": {
+            "id": { "type": "string", "minLength": 1 },
+            "completedAt": { "type": "string", "format": "date-time" }
+          }
+        }
+      ]
+    },
+    "blockers": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "conflicts": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  }
+}

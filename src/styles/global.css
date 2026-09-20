@@ -1,0 +1,399 @@
+:root {
+  color-scheme: dark;
+  --ink: #f7f9ff;
+  --muted: #a8b4cb;
+  --surface: #0b1c3d;
+  --surface-soft: rgba(17, 42, 85, 0.66);
+  --line: rgba(157, 181, 230, 0.18);
+  --accent: #8fb3ff;
+  --accent-strong: #c2d5ff;
+  --success: #65e6bb;
+  --page: #061126;
+  --max-width: 72rem;
+  /* The three leading tokens. Every line-height on the site is one of these; see
+     agent/contracts/typography.md. Unitless so each is a multiple of the element's own
+     font size and scales with it. Display is a deliberate tightening for headings at
+     display size only; heading is the default every heading inherits; text is the
+     authored body floor that keeps running text readable and override-safe. */
+  --leading-display: 0.88;
+  --leading-heading: 1.15;
+  --leading-text: 1.7;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-width: 20rem;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 72% 8%, rgba(32, 81, 185, 0.24), transparent 30rem),
+    linear-gradient(160deg, #071735 0%, var(--page) 54%, #040b18 100%);
+}
+
+a { color: inherit; }
+
+/* Every heading inherits its leading from here. A heading rendered at display size overrides
+   this with var(--leading-display) in its own rule and shapes its block; see
+   agent/contracts/typography.md. */
+h1, h2, h3, h4, h5, h6 { line-height: var(--leading-heading); }
+
+p { line-height: var(--leading-text); }
+
+.skip-link {
+  position: fixed;
+  z-index: 20;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #071126;
+  background: white;
+  border-radius: 0.5rem;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus { transform: translateY(0); }
+
+.page-shell {
+  width: min(calc(100% - 2rem), var(--max-width));
+  margin-inline: auto;
+}
+
+.site-header__inner,
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.site-header {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  min-height: 5.5rem;
+  border-bottom: 1px solid var(--line);
+  background: rgba(6, 17, 38, 0.86);
+  backdrop-filter: blur(1rem);
+}
+
+.site-header__inner { min-height: inherit; }
+
+:where(h1, h2, h3)[id] { scroll-margin-top: 6.5rem; }
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.brand img { width: 1.25rem; height: auto; }
+.brand strong { color: var(--accent); font-weight: 650; }
+
+.text-link,
+.starter-credit {
+  color: var(--muted);
+  font-size: 0.875rem;
+  text-underline-offset: 0.25rem;
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* Every icon on the site. Sized in em so it tracks the type it sits in, and nudged off the
+   baseline by the amount that puts an optically centred glyph where a letter would be. This
+   is the alignment half of agent/contracts/icons.md, applied once instead of remembered. */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: -0.125em;
+}
+
+.text-link:hover,
+.starter-credit:hover { color: var(--ink); }
+
+.hero {
+  display: grid;
+  grid-template-rows: auto auto;
+  align-content: center;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  min-height: calc(100vh - 5.5rem);
+  padding-block: clamp(1.5rem, 3.5vw, 2.5rem);
+}
+
+.hero-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(12rem, 0.8fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.1rem, 5vw, 3.75rem);
+  line-height: var(--leading-display);
+  text-wrap: balance;
+  letter-spacing: -0.065em;
+}
+
+.not-found h1 {
+  max-width: 11ch;
+  margin: 0;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  line-height: var(--leading-display);
+  text-wrap: balance;
+  letter-spacing: -0.065em;
+}
+
+.hero-mark { justify-self: end; }
+.hero-mark .mark-shell { width: clamp(18.5rem, 20vw, 20rem) !important; }
+
+.lede {
+  max-width: 42rem;
+  margin: 1.1rem 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.25rem;
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+
+/* Sibling buttons that are peers — same role, same weight, presented as equal choices, e.g.
+   Call / Message on Viber / Message on Telegram — share one width instead of each sizing to
+   its own label. Applied by hand around sibling .button and/or .contact-link elements; see
+   "Buttons that are peers share one width" in agent/rubrics/design-craft.md. */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.button-group > * {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 22rem;
+}
+
+/* The label truncates, not the button. .contact-link already wraps its label in a <span>;
+   a plain .button placed in a group needs the same — wrap its text in <span>Label</span>
+   instead of leaving it bare — so this rule has something to apply to. */
+.button-group > * > span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 3.2rem;
+  padding: 0.85rem 1.2rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.button:hover { transform: translateY(-2px); }
+.button:focus-visible,
+.text-link:focus-visible,
+.brand:focus-visible,
+.starter-credit:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.button--primary { color: #071126; background: var(--accent-strong); }
+.button--secondary { border-color: var(--line); background: rgba(255, 255, 255, 0.035); }
+.button--secondary:hover { border-color: rgba(143, 179, 255, 0.55); background: rgba(143, 179, 255, 0.08); }
+
+.setup-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.79rem;
+  list-style: none;
+}
+
+.setup-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.setup-list .icon { color: var(--success); }
+
+.section { padding-block: clamp(5rem, 10vw, 9rem); border-top: 1px solid var(--line); }
+
+.section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.2fr);
+  gap: 1rem 4rem;
+  align-items: end;
+  margin-bottom: 3rem;
+}
+
+.section-heading h2,
+.foundation h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.6rem); line-height: var(--leading-heading); text-wrap: balance; letter-spacing: -0.045em; }
+.section-heading > p:last-child { margin: 0; color: var(--muted); }
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0;
+  margin: 0;
+  border-block: 1px solid var(--line);
+  list-style: none;
+}
+
+.steps li { min-height: 16rem; padding: 1.5rem; border-right: 1px solid var(--line); }
+.steps li:last-child { border-right: 0; }
+.steps span {
+  color: var(--accent);
+  font: 600 0.72rem monospace;
+  /* leading-allow: single-line step numeral, line spacing has no visible effect */
+  line-height: 1;
+}
+.steps h3 { margin: 4rem 0 0.75rem; font-size: 1.15rem; }
+.steps p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+.hero-repo {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.25rem, 3.5vw, 2rem);
+  padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px solid rgba(143, 179, 255, 0.28);
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, rgba(46, 91, 187, 0.23), rgba(9, 26, 59, 0.7));
+}
+
+.hero-repo-copy h2 { margin: 0; font-size: clamp(1.25rem, 2.2vw, 1.7rem); line-height: var(--leading-heading); letter-spacing: -0.02em; }
+.hero-repo-copy p:last-of-type { max-width: 44rem; margin: 0.5rem 0 1rem; color: var(--muted); font-size: 0.88rem; }
+
+.hero-repo-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(4.5rem, 7vw, 6rem);
+  aspect-ratio: 1;
+  perspective: 400px;
+}
+
+.icon-github--lg {
+  width: 100%;
+  height: 100%;
+  color: var(--accent);
+  filter: drop-shadow(0 0 1rem rgba(91, 143, 255, 0.35));
+}
+
+.icon-star {
+  position: absolute;
+  top: -0.35rem;
+  right: -0.35rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  color: var(--success);
+  filter: drop-shadow(0 0 0.6rem rgba(101, 230, 187, 0.55));
+  animation: spin-y 3.2s linear infinite;
+}
+
+@keyframes spin-y {
+  to { transform: rotateY(360deg); }
+}
+
+.foundation {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem 6rem;
+  padding-block: clamp(6rem, 12vw, 11rem);
+}
+
+.foundation ul { display: grid; gap: 0.8rem; align-content: end; padding: 0; margin: 0; color: var(--muted); list-style: none; }
+.foundation li { padding-bottom: 0.8rem; border-bottom: 1px solid var(--line); }
+.fine-print { grid-column: 1 / -1; max-width: 48rem; margin: 0; color: #7f8ba2; font-size: 0.78rem; }
+code { color: var(--accent); }
+
+.site-footer { min-height: 6rem; border-top: 1px solid var(--line); color: var(--muted); }
+.site-footer p { margin: 0; font-size: 0.78rem; }
+
+.not-found { display: grid; place-content: center; min-height: calc(100vh - 11.5rem); text-align: center; }
+.not-found p:not(.eyebrow) { color: var(--muted); }
+.not-found .button { justify-self: center; margin-top: 1rem; }
+
+@media (max-width: 800px) {
+  .hero { min-height: auto; }
+  .hero-top { grid-template-columns: 1fr; }
+  .hero-copy { order: 2; }
+  .hero-mark { justify-self: center; }
+  .section-heading,
+  .foundation { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: repeat(2, 1fr); }
+  .steps li:nth-child(2) { border-right: 0; }
+  .steps li:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
+  .hero-repo { grid-template-columns: 1fr; justify-items: start; text-align: left; }
+  .hero-repo-icon { justify-self: center; }
+  .hero-repo .button { justify-self: start; }
+}
+
+@media (max-width: 520px) {
+  .page-shell { width: min(calc(100% - 1.25rem), var(--max-width)); }
+  .site-header { min-height: 4.5rem; }
+  :where(h1, h2, h3)[id] { scroll-margin-top: 5.5rem; }
+  /* Collapse the link text on the narrowest screens and leave the marks. The text stays in
+     the DOM, so the link keeps its accessible name. */
+  .site-header .text-link { font-size: 0; }
+  .site-header .text-link .icon { font-size: 1rem; }
+  .hero { padding-block: 3.5rem 5rem; }
+  .hero h1 { font-size: clamp(3rem, 18vw, 4.5rem); }
+  .actions { flex-direction: column; }
+  .button { width: 100%; }
+  .button-group { flex-direction: column; }
+  .button-group > * { max-width: none; }
+  .setup-list { display: grid; }
+  .steps { grid-template-columns: 1fr; }
+  .steps li,
+  .steps li:nth-child(2) { min-height: 12rem; border-right: 0; border-bottom: 1px solid var(--line); }
+  .steps li:last-child { border-bottom: 0; }
+  .steps h3 { margin-top: 2.5rem; }
+  .hero-repo { padding: 1.25rem; border-radius: 1rem; }
+  .site-footer { align-items: flex-start; flex-direction: column; justify-content: center; gap: 0.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  .icon-star { animation: none; }
+}

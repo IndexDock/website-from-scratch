@@ -1,0 +1,61 @@
+name: Validate repository
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  milestone:
+    # Pull requests always run. `main` in the template repository is pull-request
+    # only, so the pull-request run is the gate itself and must never be gated in
+    # turn. Only pushes are narrowed, to repositories IndexDock owns.
+    #
+    # The reason is the learner's copy. Promotion already ran this same gate on the
+    # session branch before advancing `main`, so a push run there repeats it. The
+    # one case that is not a repeat is not worth five to ten minutes either:
+    # GitHub's Add file -> Upload files commits straight to `main`, and the course
+    # asks the learner to do that at least twice, once with eight to fifteen
+    # images. Without this condition every upload starts the full five-browser and
+    # Lighthouse gate on a repository the course has just told them to leave alone,
+    # metered against their free minutes because the repository is private.
+    #
+    # Deliberately an event check rather than the three-signal shape in promote.yml.
+    # There the risk is a guard that stops matching and lets promotion loose; here
+    # it is the reverse, a condition that stops matching would silence our own gate.
+    # Keeping pull_request outside the condition makes that impossible: a rename can
+    # cost us the push run, never the gate.
+    if: github.event_name == 'pull_request' || github.repository_owner == 'IndexDock'
+    runs-on: ubuntu-latest
+    # Playwright's official image ships chromium, firefox, and webkit plus every OS
+    # dependency they need, pre-baked and matched to the pinned @playwright/test
+    # version below. That replaces a from-scratch "playwright install --with-deps"
+    # (apt-get for three browsers' worth of libraries, then the browser downloads
+    # themselves) with a single, layer-cached image pull.
+    container:
+      image: mcr.microsoft.com/playwright:v1.61.1-noble
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate committed skeleton
+        # The runner sets $HOME to /github/home on every step regardless of
+        # container-level env, overriding a job.container.env override, so the
+        # fix has to be a step-level env instead. Firefox refuses to launch as
+        # root unless $HOME is owned by the running user, and /github/home is
+        # owned by the runner user, not root.
+        env:
+          HOME: /root
+        run: npm run validate:milestone

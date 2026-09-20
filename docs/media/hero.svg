@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="IndexDock Starter: build a real business website without writing code.">
+  <title>IndexDock Starter</title>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071735"/>
+      <stop offset="0.54" stop-color="#061126"/>
+      <stop offset="1" stop-color="#040b18"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2051b9" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#2051b9" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="panelClip">
+      <rect x="0" y="0" width="1200" height="400" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <style>
+    /* Position only, never opacity, and fill-mode backwards rather than both. A renderer
+       that shows an SVG without running its animation paints the base styles, and a
+       renderer that freezes at time zero paints the 0% keyframe. Both have to be the whole
+       picture, so nothing here is allowed to start invisible. Everything settles by 1.8s;
+       no loop, because a README image offers no way to pause one. */
+    .rise { animation: rise 700ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+    .dock { animation: dock 900ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+
+    .d1 { animation-delay: 120ms; }
+    .d2 { animation-delay: 240ms; }
+    .d3 { animation-delay: 360ms; }
+    .d4 { animation-delay: 620ms; }
+    .d5 { animation-delay: 760ms; }
+    .d6 { animation-delay: 900ms; }
+    .d7 { animation-delay: 1000ms; }
+    .d8 { animation-delay: 1100ms; }
+
+    @keyframes rise {
+      from { transform: translateY(18px); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes dock {
+      from { transform: translateX(-34px); }
+      to   { transform: translateX(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rise, .dock { animation: none; }
+    }
+  </style>
+
+  <g clip-path="url(#panelClip)">
+    <rect x="0" y="0" width="1200" height="400" rx="28" fill="url(#panel)"/>
+    <circle cx="960" cy="120" r="360" fill="url(#glow)"/>
+  </g>
+  <rect x="0.5" y="0.5" width="1199" height="399" rx="28" fill="none" stroke="#9db5e6" stroke-opacity="0.18"/>
+
+  <g>
+    <circle cx="996" cy="200" r="158" fill="none" stroke="#7fa9ff" stroke-opacity="0.18"/>
+    <circle cx="996" cy="200" r="120" fill="none" stroke="#7fa9ff" stroke-opacity="0.10"/>
+  </g>
+
+  <g transform="translate(916 84) scale(0.96)">
+    <path class="dock" d="M89.6364 181H46.1818C29.6133 181 16.1818 194.431 16.1818 211C16.1818 227.569 29.6133 241 46.1818 241H119.19C135.928 241 144.296 241 150.7 237.747C156.333 234.886 160.919 230.32 163.804 224.699C167.084 218.309 167.119 209.94 167.189 193.202L167.797 49.2024C167.868 32.3369 167.903 23.9041 164.644 17.4593C161.776 11.7905 157.183 7.17827 151.527 4.28706C145.096 1 136.663 1 119.797 1H30.6818C22.6737 1 16.1818 7.49187 16.1818 15.5C16.1818 24.0604 23.1214 31 31.6818 31H89.6364C106.438 31 114.839 31 121.256 34.2698C126.901 37.146 131.49 41.7354 134.367 47.3803C137.636 53.7976 137.636 62.1984 137.636 79V133C137.636 149.802 137.636 158.202 134.367 164.62C131.49 170.265 126.901 174.854 121.256 177.73C114.839 181 106.438 181 89.6364 181Z" fill="#8fb3ff"/>
+    <path class="dock d1" d="M107.455 136H76.7273C68.443 136 61.7273 142.716 61.7273 151C61.7273 159.284 68.443 166 76.7273 166H107.455C115.739 166 122.455 159.284 122.455 151C122.455 142.716 115.739 136 107.455 136Z" fill="#c2d5ff"/>
+    <path class="dock d2" d="M16 91H107.455C115.739 91 122.455 97.7157 122.455 106C122.455 114.284 115.739 121 107.455 121H16C7.71573 121 1 114.284 1 106C1 97.7157 7.71573 91 16 91Z" fill="#c2d5ff"/>
+    <path class="dock d3" d="M107.091 76H107.455C115.739 76 122.455 69.2843 122.455 61C122.455 52.7157 115.739 46 107.454 46H107.091C98.8067 46 92.0909 52.7157 92.0909 61C92.0909 69.2843 98.8066 76 107.091 76Z" fill="#65e6bb"/>
+  </g>
+
+  <g font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+    <text class="rise" x="72" y="152" fill="#f7f9ff" font-size="62" font-weight="700" letter-spacing="-1.6">IndexDock Starter</text>
+    <text class="rise d4" x="72" y="204" fill="#a8b4cb" font-size="24" font-weight="400">Build a real business website with an AI coding agent.</text>
+    <text class="rise d5" x="72" y="240" fill="#a8b4cb" font-size="24" font-weight="400">No code, no terminal, no Git. Everything happens in your browser.</text>
+
+    <g class="rise d6">
+      <rect x="72" y="286" width="196" height="46" rx="23" fill="#112a55" fill-opacity="0.66" stroke="#9db5e6" stroke-opacity="0.18"/>
+      <circle cx="98" cy="309" r="5" fill="#65e6bb"/>
+      <text x="114" y="315" fill="#f7f9ff" font-size="17" font-weight="600">Free template</text>
+    </g>
+    <g class="rise d7">
+      <rect x="284" y="286" width="232" height="46" rx="23" fill="#112a55" fill-opacity="0.66" stroke="#9db5e6" stroke-opacity="0.18"/>
+      <circle cx="310" cy="309" r="5" fill="#8fb3ff"/>
+      <text x="326" y="315" fill="#f7f9ff" font-size="17" font-weight="600">One conversation</text>
+    </g>
+    <g class="rise d8">
+      <rect x="532" y="286" width="252" height="46" rx="23" fill="#112a55" fill-opacity="0.66" stroke="#9db5e6" stroke-opacity="0.18"/>
+      <circle cx="558" cy="309" r="5" fill="#c2d5ff"/>
+      <text x="574" y="315" fill="#f7f9ff" font-size="17" font-weight="600">Live on Cloudflare</text>
+    </g>
+  </g>
+</svg>

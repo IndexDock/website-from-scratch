@@ -1,0 +1,45 @@
+---
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  id: string;
+  items: FaqItem[];
+  heading?: string;
+}
+
+const { id, items, heading = "Frequently asked questions" } = Astro.props;
+const headingId = `${id}-title`;
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+const encodedSchema = JSON.stringify(schema).replaceAll("<", "\\u003c");
+---
+
+<section class="faq" aria-labelledby={headingId}>
+  <h2 id={headingId}>{heading}</h2>
+  <div class="faq-list">
+    {items.map((item) => (
+      <article>
+        <h3>{item.question}</h3>
+        <p>{item.answer}</p>
+      </article>
+    ))}
+  </div>
+</section>
+<script is:inline type="application/ld+json" set:html={encodedSchema} />
+
+<style>
+  .faq-list { display: grid; gap: 1.5rem; }
+  article { padding-block: 1.5rem; border-top: 1px solid currentColor; }
+  h3, p { margin: 0; }
+  p { margin-top: 0.65rem; }
+</style>

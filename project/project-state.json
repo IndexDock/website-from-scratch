@@ -1,0 +1,48 @@
+{
+  "$schema": "../agent/schemas/project-state.schema.json",
+  "schemaVersion": "3.2.0",
+  "project": {
+    "name": "IndexDock Starter website",
+    "repository": null,
+    "language": null
+  },
+  "workflow": {
+    "phase": "bootstrap",
+    "status": "ready",
+    "nextAction": "Deploy the starter page and continue in the IndexDock course.",
+    "courseCheckpointId": "deploy-placeholder"
+  },
+  "approvals": {
+    "scope": null,
+    "websitePlan": null,
+    "design": null,
+    "finalWebsite": null
+  },
+  "design": {
+    "status": "not-started",
+    "conceptCount": null,
+    "selectedConcept": null
+  },
+  "implementation": {
+    "status": "starter-ready",
+    "siteMode": "starter",
+    "noindex": true
+  },
+  "deployment": {
+    "provider": "cloudflare-workers",
+    "deploymentMethod": "not-selected",
+    "repositoryVisibility": null,
+    "promotionMode": "ci-auto",
+    "workerName": null,
+    "workersDevUrl": null,
+    "productionUrl": null,
+    "customDomainDecision": null,
+    "customDomain": null,
+    "deployedCommit": null,
+    "verifiedAt": null,
+    "fallbackReason": null
+  },
+  "lastCheckpoint": null,
+  "blockers": [],
+  "conflicts": []
+}

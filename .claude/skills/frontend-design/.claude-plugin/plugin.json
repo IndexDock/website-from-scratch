@@ -1,0 +1,21 @@
+{
+  "name": "frontend-design",
+  "displayName": "Frontend Design",
+  "version": "2026.8.10",
+  "description": "Frontend design skill for UI/UX implementation",
+  "author": {
+    "name": "Anthropic",
+    "email": "support@anthropic.com"
+  },
+  "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/frontend-design",
+  "license": "Apache-2.0",
+  "metadata": {
+    "vendored": true,
+    "vendoredFrom": "https://github.com/anthropics/claude-plugins-official.git",
+    "vendoredPath": "plugins/frontend-design",
+    "vendoredOn": "2026-08-10",
+    "vendoredBy": "IndexDock Starter",
+    "vendoredReason": "The learner is never asked to install a plugin, authorize a tool, or reach the network. See NOTICE.md.",
+    "note": "version is the retrieval date, not an upstream release number; upstream ships no version field."
+  }
+}

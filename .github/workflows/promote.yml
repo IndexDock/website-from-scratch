@@ -1,0 +1,147 @@
+name: Promote agent branch
+
+# The repository promotes the agent's work itself rather than letting an agent
+# push straight to main: the deterministic gate below decides instead of the
+# agent self-certifying, and Codex still cannot push to main from a cloud task
+# regardless. See agent/contracts/git-delivery.md for the full rationale. The
+# agent pushes its session branch; this workflow runs the full gate and, only
+# if it passes, advances main. Cloudflare Workers Builds deploys main. The
+# learner clicks nothing.
+#
+# Promotion is not publication. Publication is gated by content, not by branch:
+# implementation.noindex stays true until approvals.finalWebsite is recorded,
+# so an intermediate promotion deploys an unindexed site.
+
+on:
+  push:
+    branches:
+      - "claude/**"
+      - "codex/**"
+      - "indexdock/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: promote-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # Keyed to the repository itself, not to project-state.json. Agents write
+  # that file; nothing in a session can forge github.repository or the
+  # is_template flag. This is the only thing keeping automatic promotion out of
+  # the template repository, where main is pull-request only, so it must not
+  # depend on agent-writable state. Every repository created from the template
+  # promotes normally without anyone configuring anything.
+  #
+  # Three independent signals, because a literal name does not survive a rename
+  # and a guard that stops matching fails silently. Any one of them blocks:
+  # is_template, because the source repository is a GitHub template and
+  # repositories generated from it are not; the owner, because no learner or
+  # pilot repository is owned by IndexDock; and the name, in case a push payload
+  # ever omits is_template. Two would have to break at once to open the guard.
+  #
+  # Consequences of each, so a future change is made knowingly. A learner who
+  # marks their own repository as a template loses automatic promotion. A pilot
+  # run created under the IndexDock owner loses it too, which is why pilot
+  # repositories belong on a personal account. Both surface as a skipped run and
+  # an absent deploy rather than a red failure, so check here first when a push
+  # produced no deployment. A missing deploy is still the safer direction than a
+  # silently disarmed guard.
+  eligibility:
+    if: >-
+      github.event.repository.is_template != true
+      && github.repository_owner != 'IndexDock'
+      && github.repository != 'IndexDock/website-from-scratch'
+    runs-on: ubuntu-latest
+    outputs:
+      site-url: ${{ steps.state.outputs.site-url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Read the recorded live URL
+        id: state
+        run: |
+          url=$(node -p "const d=require('./project/project-state.json').deployment; d.productionUrl ?? d.workersDevUrl ?? ''")
+          echo "site-url=$url" >> "$GITHUB_OUTPUT"
+          echo "Recorded live URL: ${url:-none}"
+
+  gate:
+    needs: eligibility
+    runs-on: ubuntu-latest
+    # Browser engines cannot be installed inside a cloud agent sandbox, so
+    # Playwright, axe and Lighthouse only ever run here. Playwright's official
+    # image ships chromium, firefox, and webkit plus every OS dependency they
+    # need, pre-baked and matched to the pinned @playwright/test version below,
+    # instead of installing them from scratch on every promotion.
+    container:
+      image: mcr.microsoft.com/playwright:v1.61.1-noble
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run the full gate
+        # The runner sets $HOME to /github/home on every step regardless of
+        # container-level env, overriding a job.container.env override, so the
+        # fix has to be a step-level env instead. Firefox refuses to launch as
+        # root unless $HOME is owned by the running user, and /github/home is
+        # owned by the runner user, not root.
+        env:
+          HOME: /root
+        run: npm run validate:milestone
+
+  promote:
+    needs: [eligibility, gate]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Advance main
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          if ! git merge-base --is-ancestor origin/main HEAD; then
+            echo "main has advanced beyond this branch, so promotion would lose work."
+            echo
+            echo "The usual cause is a learner file upload. GitHub's Add file > Upload files"
+            echo "page commits straight to main, which puts main ahead of the session branch."
+            echo
+            echo "Agent recovery: git fetch origin main, merge origin/main into the session"
+            echo "branch, then push again. Nothing needs to be asked of the learner, and no"
+            echo "deployment changed - main still serves the last promoted commit."
+            exit 1
+          fi
+          git push origin "HEAD:main"
+          echo "Promoted ${GITHUB_SHA} to main. Workers Builds deploys from here."
+
+  verify-live:
+    needs: [eligibility, promote]
+    if: needs.eligibility.outputs.site-url != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      # The agent cannot do this itself: *.workers.dev is not on Claude Code's
+      # network allowlist and Codex has no agent-phase internet. The runner has
+      # full network access, so live verification belongs here.
+      - name: Verify the deployed site
+        run: node scripts/verify-cloudflare-deployment.mjs "${{ needs.eligibility.outputs.site-url }}" --commit "${{ github.sha }}" --timeout 900

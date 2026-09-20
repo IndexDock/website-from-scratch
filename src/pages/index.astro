@@ -1,0 +1,68 @@
+---
+import Icon from "../components/Icon.astro";
+import IndexDockMark from "../components/IndexDockMark.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../data/site";
+---
+
+<BaseLayout title={siteConfig.name}>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-top">
+      <div class="hero-copy">
+        <h1 id="hero-title">Your website is live.</h1>
+        <p class="lede">
+          The technical foundation is in place. Open the course in the repository README and let the guided workflow turn this starter into a website built around your business.
+        </p>
+        <div class="actions">
+          <a class="button button--primary" href={siteConfig.courseUrl}>Open the course <Icon name="arrow-right" /></a>
+        </div>
+        <ul class="setup-list" aria-label="Setup confirmation">
+          <li><Icon name="check" /> Repository ready</li>
+          <li><Icon name="check" /> Astro build configured</li>
+          <li><Icon name="check" /> Cloudflare delivery prepared</li>
+        </ul>
+      </div>
+      <div class="hero-mark">
+        <IndexDockMark />
+      </div>
+    </div>
+
+    <div class="hero-repo">
+      <div class="hero-repo-icon" aria-hidden="true">
+        <Icon name="github-logo" weight="fill" class="icon-github--lg" />
+        <Icon name="star" weight="fill" class="icon-star" />
+      </div>
+      <div class="hero-repo-copy">
+        <h2 id="star-title">Help more owners find Starter.</h2>
+        <p>A GitHub star helps signal that this free workflow is useful. Open the repository and select <strong>Star</strong> near the top-right. It never blocks your progress.</p>
+        <a class="button button--secondary" href={siteConfig.repositoryUrl}>Star on GitHub <Icon name="arrow-up-right" /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="next-title">
+    <div class="section-heading">
+      <h2 id="next-title">What happens after setup?</h2>
+      <p>You stay in one guided task while the agent turns your business facts, preferences, and approvals into a checked, publishable website.</p>
+    </div>
+    <ol class="steps">
+      <li><span>01</span><h3>Understand the business</h3><p>Confirm the scope, audience, services, goals, and evidence.</p></li>
+      <li><span>02</span><h3>Choose the design</h3><p>Review distinct directions built from the approved website plan.</p></li>
+      <li><span>03</span><h3>Build and check</h3><p>The agent implements, tests, and corrects the responsive site.</p></li>
+      <li><span>04</span><h3>Publish</h3><p>Approve the final website, verify production, and connect the domain.</p></li>
+    </ol>
+  </section>
+
+  <section class="foundation" aria-labelledby="foundation-title">
+    <div>
+      <h2 id="foundation-title">Fast, crawlable, and ready to become yours.</h2>
+    </div>
+    <ul>
+      <li>Static HTML with Astro</li>
+      <li>TypeScript and plain CSS</li>
+      <li>Cloudflare Static Assets</li>
+      <li>Automated build and state checks</li>
+    </ul>
+    <p class="fine-print">This temporary starter is intentionally marked <code>noindex</code>. Indexing is enabled only after the real business website passes review and is approved for publication.</p>
+  </section>
+</BaseLayout>

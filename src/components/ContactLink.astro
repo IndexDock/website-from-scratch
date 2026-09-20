@@ -1,0 +1,49 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  channel: "telegram" | "viber" | "call";
+  href: string;
+  label: string;
+}
+
+const { channel, href, label } = Astro.props;
+
+// Telegram and call come from the vendored Phosphor set. Viber does not: Phosphor has no
+// Viber mark, so src/icons/brand/ carries one of our own, drawn at "regular" and "fill"
+// only. agent/contracts/icons.md explains why that is the one place a weight mismatch is
+// allowed; "fill" is the exception it names for brand marks, the same one github-logo
+// uses at display size elsewhere on this site. "call" is a phone icon, not a brand mark,
+// so it takes the site's default weight like any other icon.
+const iconName = channel === "telegram" ? "telegram-logo" : channel === "viber" ? "viber" : "phone";
+const iconWeight = channel === "viber" ? "fill" : undefined;
+---
+
+<a class={`contact-link contact-link--${channel}`} href={href} aria-label={label} title={label}>
+  <Icon name={iconName} weight={iconWeight} />
+  <span>{label}</span>
+</a>
+
+<style>
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    max-width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    text-decoration: none;
+  }
+
+  .contact-link :global(.icon) { flex-shrink: 0; font-size: 1.25rem; }
+
+  .contact-link span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+</style>

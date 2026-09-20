@@ -1,0 +1,43 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import SeoHead from "../components/SeoHead.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+  socialImagePath?: string;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+  noindex?: boolean;
+}
+
+const { title, description, canonicalPath, socialImagePath, structuredData, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <SeoHead
+      title={title}
+      description={description}
+      canonicalPath={canonicalPath}
+      socialImagePath={socialImagePath}
+      structuredData={structuredData}
+      noindex={noindex}
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Header />
+    <div class="page-shell">
+      <main id="main-content">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

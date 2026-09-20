@@ -1,0 +1,53 @@
+{
+  "name": "website-from-scratch",
+  "version": "0.1.7",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.11.0",
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=9.6.5"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "build": "astro build",
+    "preview": "astro preview",
+    "serve:dist": "node scripts/serve-dist.mjs",
+    "generate:social": "node scripts/generate-starter-social.mjs",
+    "sync:worker": "node scripts/sync-worker-name.mjs",
+    "sync:icons": "node scripts/sync-icons.mjs",
+    "validate:state": "node scripts/validate-project-state.mjs && node scripts/sync-status.mjs --check && node scripts/sync-worker-name.mjs --check",
+    "validate:icons": "node scripts/sync-icons.mjs --check && node scripts/validate-icon-system.mjs",
+    "validate:typography": "node scripts/validate-typography.mjs",
+    "validate:version": "node scripts/validate-package-version.mjs",
+    "test:state": "node scripts/test-project-state-validation.mjs",
+    "test:worker-name": "node scripts/test-worker-name-sync.mjs",
+    "sync:status": "node scripts/sync-status.mjs",
+    "validate:cloudflare": "wrangler deploy --dry-run",
+    "verify:cloudflare": "node scripts/verify-cloudflare-deployment.mjs",
+    "validate:release": "node scripts/validate-release.mjs",
+    "test:release": "node scripts/test-release-validation.mjs",
+    "validate:e2e-freshness": "node scripts/validate-e2e-freshness.mjs",
+    "validate:design-plugin": "node scripts/validate-design-plugin.mjs",
+    "validate:skill-parity": "node scripts/validate-skill-parity.mjs",
+    "validate:schema-parity": "node scripts/validate-schema-parity.mjs",
+    "validate:design-reference": "node scripts/validate-design-reference.mjs",
+    "validate:agent": "npm run validate:version && npm run validate:state && npm run validate:design-plugin && npm run validate:skill-parity && npm run validate:schema-parity && npm run validate:icons && npm run validate:typography && npm run validate:design-reference && npm run test:state && npm run test:worker-name && npm run check && npm run build && npm run validate:e2e-freshness && npm run validate:release && npm run test:release && npm run validate:cloudflare",
+    "validate:milestone": "npm run validate:agent && npm run test:e2e && npm run test:lighthouse",
+    "pretest:e2e": "npm run build",
+    "test:e2e": "playwright test",
+    "test:lighthouse": "node scripts/run-lighthouse.mjs"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.9",
+    "@axe-core/playwright": "4.12.1",
+    "@phosphor-icons/core": "2.1.1",
+    "@playwright/test": "1.61.1",
+    "@types/node": "24.13.3",
+    "astro": "7.1.3",
+    "lighthouse": "12.6.1",
+    "typescript": "6.0.3",
+    "wrangler": "4.114.0"
+  }
+}

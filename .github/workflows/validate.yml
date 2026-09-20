@@ -9,6 +9,17 @@ permissions:
   contents: read
 
 jobs:
+  # ⚠️ THE JOB ID BELOW IS THE STATUS CHECK NAME. The branch ruleset on `main`
+  # requires a check called `milestone`, and GitHub matches it by the name the run
+  # reports — which, for a job with no `name:` of its own, is the job id itself.
+  #
+  # Rename this job and nothing fails loudly. The required check simply never
+  # reports, every pull request waits on it forever, and the repository stops
+  # accepting work with no error that says why. The same failure shape the guard
+  # comment in promote.yml warns about, one step worse: there a stale literal name
+  # opens a guard, here it closes the repository.
+  #
+  # So renaming this job means editing the ruleset in the same change.
   milestone:
     # Pull requests always run. `main` in the template repository is pull-request
     # only, so the pull-request run is the gate itself and must never be gated in
